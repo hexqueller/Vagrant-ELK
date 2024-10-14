@@ -1,0 +1,16 @@
+---
+- name: Template hosts file
+  template:
+    src: templates/hosts.j2
+    dest: /etc/hosts
+    mode: '0644'
+
+- name: Install default packages and update apt cache
+  apt:
+    name:
+      - vim
+      - curl
+      - wget
+    state: present
+    update_cache: yes
+

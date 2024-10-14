@@ -1,0 +1,8 @@
+---
+yandex: "mirror.yandex.ru/mirrors/elastic/8/pool"
+
+elastic: https://{{yandex}}/main/e/elasticsearch/elasticsearch-{{elk_ver}}-amd64.deb
+
+kibana: https://{{yandex}}/main/k/kibana/kibana-{{elk_ver}}-amd64.deb
+
+logstash: https://{{yandex}}/main/l/logstash/logstash-{{elk_ver}}-amd64.deb

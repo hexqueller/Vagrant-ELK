@@ -1,0 +1,20 @@
+---
+- name: Download packages
+  shell: wget -O /tmp/{{ item | basename }} {{ item }}
+  loop: "{{ elk_packages }}"
+
+- name: Install packages
+  shell: dpkg -i /tmp/*.deb
+  args:
+    chdir: /tmp
+  register: dpkg_result
+  ignore_errors: yes
+
+- name: Fix dependencies
+  apt:
+    name: -f
+    state: present
+  when: dpkg_result.rc != 0
+
+- name: Clear after work
+  shell: rm -rf /tmp/*.deb
