@@ -1,21 +1,25 @@
 Vagrant.configure("2") do |config|
 
     machines = [
-      { name: "elk-master", ip: "10.0.0.50" }
+      { name: "enode1", ip: "10.0.0.50" },
+      { name: "enode2", ip: "10.0.0.51" },
+      { name: "enode3", ip: "10.0.0.52" },
+      { name: "lnode", ip: "10.0.0.53" },
+      { name: "knode", ip: "10.0.0.54" }
     ]
   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "vagrant.yml"
     end
   
-    machines.reverse.each do |machine|
+    machines.each do |machine|
         config.vm.define machine[:name] do |node|
           node.vm.box = "debian/bookworm64"
           node.vm.hostname = machine[:name]
           node.vm.network "public_network", bridge: "eno1", ip: machine[:ip], dev: "eno1"
           node.vm.provider "virtualbox" do |vb|
-            vb.memory = "4096"
-            vb.cpus = 4
+            vb.memory = "2048"
+            vb.cpus = 2
           end
       end
     end

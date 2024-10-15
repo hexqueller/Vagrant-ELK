@@ -4,13 +4,32 @@
   roles:
     - PrepareNewOS
 
-- hosts: elk-master
+- hosts: 
+    - enode1
+    - enode2
+    - enode3
   become: yes
   vars:
-    elk_ver: 8.10.3
     elk_packages:
       - "{{ elastic }}"
-      - "{{ kibana }}"
+      - "{{ filebeat }}"
+  roles:
+    - ElasticStack
+
+- hosts: lnode
+  become: yes
+  vars:
+    elk_packages:
       - "{{ logstash }}"
+      - "{{ filebeat }}"
+  roles:
+    - ElasticStack
+
+- hosts: knode
+  become: yes
+  vars:
+    elk_packages:
+      - "{{ kibana }}"
+      - "{{ filebeat }}"
   roles:
     - ElasticStack
