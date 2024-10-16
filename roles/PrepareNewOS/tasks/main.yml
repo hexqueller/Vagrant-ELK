@@ -11,5 +11,6 @@
       - vim
       - curl
       - wget
+      - htop
     state: present
     update_cache: yes

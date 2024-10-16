@@ -1,80 +1,138 @@
 ---
-- name: Download packages
-  shell: wget -O /tmp/{{ item | basename }} {{ item }}
-  loop: "{{ elk_packages }}"
-
-- name: Install packages
-  shell: dpkg -i /tmp/*.deb
-  args:
-    chdir: /tmp
-  register: dpkg_result
-  ignore_errors: yes
-
-- name: Fix dependencies
-  apt:
-    name: -f
-    state: present
-  when: dpkg_result.rc != 0
-
-- name: Clear after work
-  shell: rm -rf /tmp/*.deb
-
-- name: Configure Elasticsearch
+- name: Elasticsearch
   block:
+
+    - name: Check elastic package exist
+      shell: dpkg -l | grep elastic
+      register: elastic_check
+      ignore_errors: yes
+
+    - name: Install missing package
+      block:
+        - name: Download packages
+          shell: wget -O /tmp/{{ elastic | basename }} {{ elastic }}
+
+        - name: Install packages
+          shell: dpkg -i /tmp/{{ elastic | basename }}
+
+        - name: Clear after install
+          shell: rm -rf /tmp/{{ elastic | basename }}
+      when: elastic_check.rc != 0
+
     - name: Template config
       template:
         src: templates/elasticsearch.yml.j2
         dest: /etc/elasticsearch/elasticsearch.yml
-        mode: '0644'
+        mode: '0664'
+
+    - name: Template jvm options
+      template:
+        src: templates/jvm.options.j2
+        dest: /etc/elasticsearch/jvm.options
+        mode: '0664'
 
     - name: Start ElasticSearch
       systemd:
         name: elasticsearch
         enabled: yes
-        state: started
+        state: restarted
   when: elastic in elk_packages
 
-- name: Configure Logstash
+- name: Logstash
   block:
+
+    - name: Check logstash package exist
+      shell: dpkg -l | grep logstash
+      register: logstash_check
+      ignore_errors: yes
+
+    - name: Install missing package
+      block:
+        - name: Download packages
+          shell: wget -O /tmp/{{ logstash | basename }} {{ logstash }}
+
+        - name: Install packages
+          shell: dpkg -i /tmp/{{ logstash | basename }}
+
+        - name: Clear after install
+          shell: rm -rf /tmp/{{ logstash | basename }}
+      when: logstash_check.rc != 0
+
     - name: Template config
       template:
         src: templates/logstash.yml.j2
         dest: /etc/logstash/logstash.yml
-        mode: '0644'
+        mode: '0664'
 
     - name: Start Logstash
       systemd:
         name: logstash
         enabled: yes
-        state: started
+        state: restarted
   when: logstash in elk_packages
 
-- name: Configure Kibana
+- name: Kibana
   block:
+
+    - name: Check kibana package exist
+      shell: dpkg -l | grep kibana
+      register: kibana_check
+      ignore_errors: yes
+
+    - name: Install missing package
+      block:
+        - name: Download packages
+          shell: wget -O /tmp/{{ kibana | basename }} {{ kibana }}
+
+        - name: Install packages
+          shell: dpkg -i /tmp/{{ kibana | basename }}
+
+        - name: Clear after install
+          shell: rm -rf /tmp/{{ kibana | basename }}
+      when: kibana_check.rc != 0
+
     - name: Template config
       template:
         src: templates/kibana.yml.j2
         dest: /etc/kibana/kibana.yml
-        mode: '0644'
+        mode: '0664'
 
     - name: Start Kibana
       systemd:
         name: kibana
         enabled: yes
-        state: started
+        state: restarted
   when: kibana in elk_packages
 
-- name: Configure FileBeat
+- name: FileBeat
   block:
+
+    - name: Check filebeat package exist
+      shell: dpkg -l | grep filebeat
+      register: filebeat_check
+      ignore_errors: yes
+
+    - name: Install missing package
+      block:
+        - name: Download packages
+          shell: wget -O /tmp/{{ filebeat | basename }} {{ filebeat }}
+
+        - name: Install packages
+          shell: dpkg -i /tmp/{{ filebeat | basename }}
+
+        - name: Clear after install
+          shell: rm -rf /tmp/{{ filebeat | basename }}
+      when: filebeat_check.rc != 0
+
     - name: Template config
       template:
         src: templates/filebeat.yml.j2
         dest: /etc/filebeat/filebeat.yml
-        mode: '0644'
+        mode: '0664'
 
     - name: Start FileBeat
       systemd:
         name: filebeat
         enabled: yes
-        state: started
+        state: restarted
   when: filebeat in elk_packages
