@@ -64,6 +64,12 @@
         dest: /etc/logstash/logstash.yml
         mode: '0664'
 
+    - name: Template config
+      template:
+        src: templates/logstash.conf.j2
+        dest: /etc/logstash/conf.d/logstash.conf
+        mode: '0664'
+
     - name: Start Logstash
       systemd:
         name: logstash
@@ -128,7 +134,7 @@
       template:
         src: templates/filebeat.yml.j2
         dest: /etc/filebeat/filebeat.yml
-        mode: '0664'
+        mode: '0644'
 
     - name: Start FileBeat
       systemd:

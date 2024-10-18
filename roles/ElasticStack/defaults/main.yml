@@ -1,11 +1,11 @@
 ---
 elk_ver: 8.10.3
-yandex: "mirror.yandex.ru/mirrors/elastic/8/pool"
+elastic_cluster_name: "es01"
 
-elastic: https://{{ yandex }}/main/e/elasticsearch/elasticsearch-{{ elk_ver }}-amd64.deb
 
-kibana: https://{{ yandex }}/main/k/kibana/kibana-{{ elk_ver }}-amd64.deb
+repository: http://local-repo/repo
 
-logstash: https://{{ yandex }}/main/l/logstash/logstash-{{ elk_ver }}-amd64.deb
-
-filebeat: https://{{ yandex }}/main/f/filebeat/filebeat-{{ elk_ver }}-amd64.deb
+elastic: "{{ repository }}/elasticsearch-{{ elk_ver }}-amd64.deb"
+kibana: "{{ repository }}/kibana-{{ elk_ver }}-amd64.deb"
+logstash: "{{ repository }}/logstash-{{ elk_ver }}-amd64.deb"
+filebeat: "{{ repository }}/filebeat-{{ elk_ver }}-amd64.deb"

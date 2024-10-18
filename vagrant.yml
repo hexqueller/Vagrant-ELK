@@ -13,6 +13,7 @@
     elk_packages:
       - "{{ elastic }}"
       - "{{ filebeat }}"
+    cluster_hosts: "enode1, enode2, enode3"
   roles:
     - ElasticStack
 
@@ -33,3 +34,14 @@
       - "{{ filebeat }}"
   roles:
     - ElasticStack
+
+- hosts: local-repo
+  become: yes
+  vars:
+    files:
+      - "{{ elastic }}"
+      - "{{ logstash }}"
+      - "{{ kibana }}"
+      - "{{ filebeat }}"
+  roles:
+    - Repository

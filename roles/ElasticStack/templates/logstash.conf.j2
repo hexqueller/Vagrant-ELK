@@ -1,0 +1,17 @@
+input {
+  beats {
+    port => 5044
+  }
+}
+
+filter {
+  # Фильтры
+}
+
+output {
+  elasticsearch {
+    hosts => ["http://enode1:9200", "http://enode2:9200", "http://enode3:9200"]
+    index => "filebeat-%{+YYYY.MM.dd}"
+  }
+  stdout { codec => rubydebug }
+}
