@@ -6,13 +6,22 @@ default_repo_folder: /var/www/html/repo
 elk_ver: 8.10.3
 yandex: "mirror.yandex.ru/mirrors/elastic/8/pool/main"
 
+#### Packages links
 elastic: "https://{{ yandex }}/e/elasticsearch/elasticsearch-{{ elk_ver }}-amd64.deb"
 logstash: "https://{{ yandex }}/l/logstash/logstash-{{ elk_ver }}-amd64.deb"
 kibana: "https://{{ yandex }}/k/kibana/kibana-{{ elk_ver }}-amd64.deb"
 filebeat: "https://{{ yandex }}/f/filebeat/filebeat-{{ elk_ver }}-amd64.deb"
 metricbeat: "https://{{ yandex }}/m/metricbeat/metricbeat-{{ elk_ver }}-amd64.deb"
 
+#### Repository
 dpkg_packages:
   - dpkg-dev
   - debhelper
   - build-essential
+
+files:
+  - "{{ elastic }}"
+  - "{{ logstash }}"
+  - "{{ kibana }}"
+  - "{{ filebeat }}"
+  - "{{ metricbeat }}"

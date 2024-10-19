@@ -1,38 +1,24 @@
 ---
 - hosts: local-repo
   become: yes
-  vars:
-    files:
-      - "{{ elastic }}"
-      - "{{ logstash }}"
-      - "{{ kibana }}"
-      - "{{ filebeat }}"
-      - "{{ metricbeat }}"
   roles:
     - Repository
 
 - hosts: all
   become: yes
   vars:
-    repository_host: "local-repo"
     elk_packages:
       - filebeat
       - metricbeat
-    output_host: "lnode:5044"
-    cluster_hosts: "http://enode1:9200, http://enode2:9200, http://enode3:9200"
   roles:
     - PrepareNewOS
     - ElasticStack
 
-- hosts: 
-    - enode1
-    - enode2
-    - enode3
+- hosts: enode1, enode2, enode3
   become: yes
   vars:
     elk_packages:
       - elastic
-    cluster_hosts: "enode1, enode2, enode3"
   roles:
     - ElasticStack
 
@@ -49,6 +35,5 @@
   vars:
     elk_packages:
       - kibana
-    cluster_hosts: "http://enode1:9200, http://enode2:9200, http://enode3:9200"
   roles:
     - ElasticStack

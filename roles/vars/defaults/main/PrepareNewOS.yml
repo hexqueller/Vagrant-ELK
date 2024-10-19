@@ -4,3 +4,5 @@ default_packages:
   - curl
   - htop
   - unzip
+
+repository_host: "local-repo"

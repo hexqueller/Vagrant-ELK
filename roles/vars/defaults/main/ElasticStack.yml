@@ -1,0 +1,13 @@
+---
+elk_ver: 8.10.3
+
+#### ElasticSearch
+elastic_cluster_name: "es01"
+elk_home: "/usr/share/elasticsearch"
+cluster_hosts: "enode1, enode2, enode3"
+
+#### Kibana
+cluster_hosts_http: "http://enode1:9200, http://enode2:9200, http://enode3:9200"
+
+#### Logstash
+output_host: "lnode:5044"

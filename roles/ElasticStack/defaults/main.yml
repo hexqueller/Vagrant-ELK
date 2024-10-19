@@ -1,4 +1,0 @@
----
-elk_ver: 8.10.3
-elastic_cluster_name: "es01"
-elk_home: "/usr/share/elasticsearch"
