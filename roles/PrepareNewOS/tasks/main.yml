@@ -12,5 +12,6 @@
       - curl
       - wget
       - htop
+      - unzip
     state: present
     update_cache: yes

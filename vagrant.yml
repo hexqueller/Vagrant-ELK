@@ -32,6 +32,7 @@
     elk_packages:
       - "{{ kibana }}"
       - "{{ filebeat }}"
+    cluster_hosts: "http://enode1:9200, http://enode2:9200, http://enode3:9200"
   roles:
     - ElasticStack
 
@@ -43,5 +44,8 @@
       - "{{ logstash }}"
       - "{{ kibana }}"
       - "{{ filebeat }}"
+    elk_packages:
+      - "{{ filebeat }}"
   roles:
     - Repository
+    - ElasticStack
