@@ -36,6 +36,21 @@
   when: not item.stat.exists
   with_items: "{{ file_stats.results }}"
 
+- name: Install dev packages for create repository
+  apt:
+    name: "{{ dpkg_packages }}"
+    state: present
+
+- name: Clear Packages file
+  file:
+    state: absent
+    path: "{{ default_repo_folder }}/Packages.gz"
+
+- name: Create Packages file
+  shell: "dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz"
+  args:
+    chdir: "{{ default_repo_folder }}"
+
 - name: Start Nginx
   systemd:
     name: nginx

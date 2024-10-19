@@ -5,13 +5,14 @@
     dest: /etc/hosts
     mode: '0644'
 
+- name: Template repo file
+  template:
+    src: templates/local-repo.list.j2
+    dest: /etc/apt/sources.list.d/local-repo.list
+    mode: '0644'
+
 - name: Install default packages and update apt cache
   apt:
-    name:
-      - vim
-      - curl
-      - wget
-      - htop
-      - unzip
+    name: "{{ default_packages }}"
     state: present
     update_cache: yes

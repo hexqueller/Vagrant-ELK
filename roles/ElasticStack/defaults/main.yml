@@ -1,16 +1,4 @@
 ---
 elk_ver: 8.10.3
 elastic_cluster_name: "es01"
-elastic_cert: "elastic-stack-ca.p12"
-signed_cert_name: "elastic-certificates.p12"
-ca_pass: "qwerty"
-
 elk_home: "/usr/share/elasticsearch"
-cert_home: "/etc/elasticsearch/certs"
-
-repository: "http://local-repo/repo"
-
-elastic: "{{ repository }}/elasticsearch-{{ elk_ver }}-amd64.deb"
-kibana: "{{ repository }}/kibana-{{ elk_ver }}-amd64.deb"
-logstash: "{{ repository }}/logstash-{{ elk_ver }}-amd64.deb"
-filebeat: "{{ repository }}/filebeat-{{ elk_ver }}-amd64.deb"

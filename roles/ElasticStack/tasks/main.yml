@@ -1,23 +1,10 @@
 ---
 - name: Elasticsearch
   block:
-
-    - name: Check elastic package exist
-      shell: dpkg -l | grep elastic
-      register: elastic_check
-      ignore_errors: yes
-
     - name: Install missing package
-      block:
-        - name: Download packages
-          shell: wget -O /tmp/{{ elastic | basename }} {{ elastic }}
-
-        - name: Install packages
-          shell: dpkg -i /tmp/{{ elastic | basename }}
-
-        - name: Clear after install
-          shell: rm -rf /tmp/{{ elastic | basename }}
-      when: elastic_check.rc != 0
+      apt:
+        name: elasticsearch
+        state: present
 
     - name: Template config
       template:
@@ -36,27 +23,14 @@
         name: elasticsearch
         enabled: yes
         state: restarted
-  when: elastic in elk_packages
+  when: '"elastic" in elk_packages'
 
 - name: Logstash
   block:
-
-    - name: Check logstash package exist
-      shell: dpkg -l | grep logstash
-      register: logstash_check
-      ignore_errors: yes
-
     - name: Install missing package
-      block:
-        - name: Download packages
-          shell: wget -O /tmp/{{ logstash | basename }} {{ logstash }}
-
-        - name: Install packages
-          shell: dpkg -i /tmp/{{ logstash | basename }}
-
-        - name: Clear after install
-          shell: rm -rf /tmp/{{ logstash | basename }}
-      when: logstash_check.rc != 0
+      apt:
+        name: logstash
+        state: present
 
     - name: Template config
       template:
@@ -75,27 +49,14 @@
         name: logstash
         enabled: yes
         state: restarted
-  when: logstash in elk_packages
+  when: '"logstash" in elk_packages'
 
 - name: Kibana
   block:
-
-    - name: Check kibana package exist
-      shell: dpkg -l | grep kibana
-      register: kibana_check
-      ignore_errors: yes
-
     - name: Install missing package
-      block:
-        - name: Download packages
-          shell: wget -O /tmp/{{ kibana | basename }} {{ kibana }}
-
-        - name: Install packages
-          shell: dpkg -i /tmp/{{ kibana | basename }}
-
-        - name: Clear after install
-          shell: rm -rf /tmp/{{ kibana | basename }}
-      when: kibana_check.rc != 0
+      apt:
+        name: kibana
+        state: present
 
     - name: Template config
       template:
@@ -108,27 +69,14 @@
         name: kibana
         enabled: yes
         state: restarted
-  when: kibana in elk_packages
+  when: '"kibana" in elk_packages'
 
 - name: FileBeat
   block:
-
-    - name: Check filebeat package exist
-      shell: dpkg -l | grep filebeat
-      register: filebeat_check
-      ignore_errors: yes
-
     - name: Install missing package
-      block:
-        - name: Download packages
-          shell: wget -O /tmp/{{ filebeat | basename }} {{ filebeat }}
-
-        - name: Install packages
-          shell: dpkg -i /tmp/{{ filebeat | basename }}
-
-        - name: Clear after install
-          shell: rm -rf /tmp/{{ filebeat | basename }}
-      when: filebeat_check.rc != 0
+      apt:
+        name: filebeat
+        state: present
 
     - name: Template config
       template:
@@ -141,4 +89,24 @@
         name: filebeat
         enabled: yes
         state: restarted
-  when: filebeat in elk_packages
+  when: '"filebeat" in elk_packages'
+
+- name: MetricBeat
+  block:
+    - name: Install missing package
+      apt:
+        name: metricbeat
+        state: present
+
+    - name: Template config
+      template:
+        src: templates/metricbeat.yml.j2
+        dest: /etc/metricbeat/metricbeat.yml
+        mode: '0644'
+
+    - name: Start MetricBeat
+      systemd:
+        name: metricbeat
+        enabled: yes
+        state: restarted
+  when: '"metricbeat" in elk_packages'

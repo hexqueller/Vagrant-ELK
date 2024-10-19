@@ -1,41 +1,4 @@
 ---
-- hosts: all
-  become: yes
-  roles:
-    - PrepareNewOS
-
-- hosts: 
-    - enode1
-    - enode2
-    - enode3
-  become: yes
-  vars:
-    elk_packages:
-      - "{{ elastic }}"
-      - "{{ filebeat }}"
-    cluster_hosts: "enode1, enode2, enode3"
-  roles:
-    - ElasticStack
-
-- hosts: lnode
-  become: yes
-  vars:
-    elk_packages:
-      - "{{ logstash }}"
-      - "{{ filebeat }}"
-  roles:
-    - ElasticStack
-
-- hosts: knode
-  become: yes
-  vars:
-    elk_packages:
-      - "{{ kibana }}"
-      - "{{ filebeat }}"
-    cluster_hosts: "http://enode1:9200, http://enode2:9200, http://enode3:9200"
-  roles:
-    - ElasticStack
-
 - hosts: local-repo
   become: yes
   vars:
@@ -44,8 +7,48 @@
       - "{{ logstash }}"
       - "{{ kibana }}"
       - "{{ filebeat }}"
-    elk_packages:
-      - "{{ filebeat }}"
+      - "{{ metricbeat }}"
   roles:
     - Repository
+
+- hosts: all
+  become: yes
+  vars:
+    repository_host: "local-repo"
+    elk_packages:
+      - filebeat
+      - metricbeat
+    output_host: "lnode:5044"
+    cluster_hosts: "http://enode1:9200, http://enode2:9200, http://enode3:9200"
+  roles:
+    - PrepareNewOS
+    - ElasticStack
+
+- hosts: 
+    - enode1
+    - enode2
+    - enode3
+  become: yes
+  vars:
+    elk_packages:
+      - elastic
+    cluster_hosts: "enode1, enode2, enode3"
+  roles:
+    - ElasticStack
+
+- hosts: lnode
+  become: yes
+  vars:
+    elk_packages:
+      - logstash
+  roles:
+    - ElasticStack
+
+- hosts: knode
+  become: yes
+  vars:
+    elk_packages:
+      - kibana
+    cluster_hosts: "http://enode1:9200, http://enode2:9200, http://enode3:9200"
+  roles:
     - ElasticStack
