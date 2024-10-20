@@ -11,3 +11,11 @@ cluster_hosts_http: "http://enode1:9200, http://enode2:9200, http://enode3:9200"
 
 #### Logstash
 output_host: "lnode:5044"
+
+#### MetricBeat
+metricbeat_modules:
+  - "linux"
+  - "nginx"
+  - "elasticsearch-xpack"
+  - "logstash-xpack"
+  - "kibana-xpack"

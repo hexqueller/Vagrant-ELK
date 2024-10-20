@@ -19,13 +19,8 @@ Vagrant.configure("2") do |config|
       node.vm.hostname = machine[:name]
       node.vm.network "public_network", bridge: "eno1", ip: machine[:ip], dev: "eno1"
       node.vm.provider "virtualbox" do |vb|
-        if machine[:name].start_with?("enode")
-          vb.memory = "2048"
-          vb.cpus = 2
-        else
-          vb.memory = "1024"
-          vb.cpus = 1
-        end
+        vb.memory = "2048"
+        vb.cpus = 1
       end
     end
   end

@@ -15,4 +15,3 @@
   apt:
     name: "{{ default_packages }}"
     state: present
-    update_cache: yes

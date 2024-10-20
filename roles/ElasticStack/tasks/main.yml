@@ -104,6 +104,19 @@
         dest: /etc/metricbeat/metricbeat.yml
         mode: '0644'
 
+    - name: Collect packages info
+      shell: "dpkg -l | awk '{print $2}' | grep -v '^$'"
+      register: packages
+
+    - name: Activate modules
+      shell: "metricbeat modules enable {{ item }}"
+      loop: "{{ metricbeat_modules }}"
+      when: (item == 'linux') or
+            (item == 'nginx' and 'nginx' in packages|lower) or
+            (item == 'elasticsearch-xpack' and 'elasticsearch' in packages|lower) or
+            (item == 'logstash-xpack' and 'logstash' in packages|lower) or
+            (item == 'kibana-xpack' and 'kibana' in packages|lower)
+
     - name: Start MetricBeat
       systemd:
         name: metricbeat

@@ -6,13 +6,8 @@
 
 - hosts: all
   become: yes
-  vars:
-    elk_packages:
-      - filebeat
-      - metricbeat
   roles:
     - PrepareNewOS
-    - ElasticStack
 
 - hosts: enode1, enode2, enode3
   become: yes
@@ -35,5 +30,14 @@
   vars:
     elk_packages:
       - kibana
+  roles:
+    - ElasticStack
+
+- hosts: all
+  become: yes
+  vars:
+    elk_packages:
+      - filebeat
+      - metricbeat
   roles:
     - ElasticStack

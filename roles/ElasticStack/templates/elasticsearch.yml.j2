@@ -89,7 +89,7 @@ cluster.initial_master_nodes: [{{ cluster_hosts.split(',') | map('trim') | map('
 # --------------------------------------------------------------------------------
 
 # Enable security features
-xpack.security.enabled: false
+xpack.security.enabled: true
 
 xpack.security.enrollment.enabled: true
 
@@ -100,7 +100,7 @@ xpack.security.http.ssl:
 
 # Enable encryption and mutual authentication between cluster nodes
 xpack.security.transport.ssl:
-  enabled: false
+  enabled: true
   verification_mode: certificate
   keystore.path: certs/transport.p12
   truststore.path: certs/transport.p12

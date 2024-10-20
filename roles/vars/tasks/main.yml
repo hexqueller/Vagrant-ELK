@@ -1,2 +1,6 @@
 ---
+- name: Create Packages file
+  shell: "apt update"
+  ignore_errors: true
+
 - debug: msg="Vars are loaded"
