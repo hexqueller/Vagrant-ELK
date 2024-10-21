@@ -4,10 +4,17 @@ elk_ver: 8.10.3
 #### ElasticSearch
 elastic_cluster_name: "es01"
 elk_home: "/usr/share/elasticsearch"
+elk_conf: "/etc/elasticsearch"
 cluster_hosts: "enode1, enode2, enode3"
 
+generated_keys:
+  - xpack.security.http.ssl.keystore.secure_password
+  - xpack.security.transport.ssl.keystore.secure_password
+  - xpack.security.transport.ssl.truststore.secure_password
+
 #### Kibana
-cluster_hosts_http: "http://enode1:9200, http://enode2:9200, http://enode3:9200"
+cluster_hosts_http: "https://enode1:9200, https://enode2:9200, https://enode3:9200"
+kibana_conf: "/etc/kibana"
 
 #### Logstash
 output_host: "lnode:5044"

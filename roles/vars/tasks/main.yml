@@ -1,5 +1,5 @@
 ---
-- name: Create Packages file
+- name: Update repos
   shell: "apt update"
   ignore_errors: true
 

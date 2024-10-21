@@ -1,8 +1,21 @@
 ---
+repository_host: local-repo
+hosts:
+  - name: "{{ repository_host }}"
+    ip: 10.0.0.50
+  - name: enode1
+    ip: 10.0.0.51
+  - name: enode2
+    ip: 10.0.0.52
+  - name: enode3
+    ip: 10.0.0.53
+  - name: lnode
+    ip: 10.0.0.54
+  - name: knode 
+    ip: 10.0.0.55
+
 default_packages:
   - vim
   - curl
   - htop
   - unzip
-
-repository_host: "local-repo"

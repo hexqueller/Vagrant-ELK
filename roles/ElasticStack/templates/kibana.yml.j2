@@ -40,7 +40,7 @@ server.name: "{{ ansible_hostname }}"
 
 # =================== System: Elasticsearch ===================
 # The URLs of the Elasticsearch instances to use for all your queries.
-elasticsearch.hosts: [{{ cluster_hosts_http.split(',') | map('trim') | map('quote') | join(', ') }}] 
+# elasticsearch.hosts: [{{ cluster_hosts_http.split(',') | map('trim') | map('quote') | join(', ') }}] 
 
 # If your Elasticsearch is protected with basic authentication, these settings provide
 # the username and password that the Kibana server uses to perform maintenance on the Kibana
