@@ -1,6 +1,15 @@
 ---
 - hosts: local-repo
   become: yes
+  vars:
+    files:
+    # - "{{ elastic }}"
+    # - "{{ logstash }}"
+    # - "{{ kibana }}"
+    # - "{{ filebeat }}"
+    # - "{{ metricbeat }}"
+    - "{{ opensearch }}"
+    - "{{ ops_dashboard }}"
   roles:
     - Repository
 
@@ -9,6 +18,24 @@
   roles:
     - PrepareNewOS
 
+### OpenSearch
+- hosts: onode1, onode2, onode3
+  become: yes
+  vars:
+    ops_packages:
+      - opensearch
+  roles:
+    - OpenSearchStack
+
+- hosts: dnode
+  become: yes
+  vars:
+    ops_packages:
+      - dashboard
+  roles:
+    - OpenSearchStack
+
+### ElasticSearch
 - hosts: enode1, enode2, enode3
   become: yes
   vars:
@@ -33,7 +60,7 @@
   roles:
     - ElasticStack
 
-- hosts: all
+- hosts: enode1, enode2, enode3, lnode, knode
   become: yes
   vars:
     elk_packages:

@@ -1,0 +1,10 @@
+---
+#### OpenSearch
+opensearch_cluster_name: "ops01"
+ops_home: "/usr/share/opensearch"
+ops_conf: "/etc/opensearch"
+cluster_hosts: "onode1, onode2, onode3"
+opensearch_admin_password: "4%6?8rKI]USASvT"
+
+#### Dashboard
+dash_conf: /etc/opensearch-dashboards
