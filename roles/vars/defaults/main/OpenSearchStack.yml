@@ -7,4 +7,5 @@ cluster_hosts: "onode1, onode2, onode3"
 opensearch_admin_password: "4%6?8rKI]USASvT"
 
 #### Dashboard
+cluster_hosts_http: "https://onode1:9200, https://onode2:9200, https://onode3:9200"
 dash_conf: /etc/opensearch-dashboards

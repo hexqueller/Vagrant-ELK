@@ -30,7 +30,7 @@ server.host: "0.0.0.0"
 server.name: "{{ ansible_hostname }}"
 
 # The URLs of the OpenSearch instances to use for all your queries.
-# opensearch.hosts: ["http://localhost:9200"]
+opensearch.hosts: [{{ cluster_hosts_http.split(',') | map('trim') | map('quote') | join(', ') }}] 
 
 # OpenSearch Dashboards uses an index in OpenSearch to store saved searches, visualizations and
 # dashboards. OpenSearch Dashboards creates a new index if the index doesn't already exist.
@@ -213,10 +213,10 @@ server.name: "{{ ansible_hostname }}"
 # Set the value of this setting to true to enable UI Metric collections
 # usageCollection.uiMetric.enabled: false
 
-opensearch.hosts: [https://localhost:9200]
+# opensearch.hosts: [https://localhost:9200]
 opensearch.ssl.verificationMode: none
-opensearch.username: kibanaserver
-opensearch.password: kibanaserver
+opensearch.username: admin
+opensearch.password: {{ opensearch_admin_password }}
 opensearch.requestHeadersWhitelist: [authorization, securitytenant]
 
 opensearch_security.multitenancy.enabled: true
