@@ -40,3 +40,23 @@
         enabled: yes
         state: restarted
   when: '"dashboard" in ops_packages'
+
+- name: FileBeat
+  block:
+    - name: Install missing package
+      apt:
+        name: filebeat
+        state: present
+
+    - name: Template config
+      template:
+        src: templates/filebeat.yml.j2
+        dest: /etc/filebeat/filebeat.yml
+        mode: '0644'
+
+    - name: Start FileBeat
+      systemd:
+        name: filebeat
+        enabled: yes
+        state: restarted
+  when: '"filebeat" in ops_packages'

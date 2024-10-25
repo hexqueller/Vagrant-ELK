@@ -6,7 +6,7 @@
     # - "{{ elastic }}"
     # - "{{ logstash }}"
     # - "{{ kibana }}"
-    # - "{{ filebeat }}"
+    - "{{ filebeat }}"
     # - "{{ metricbeat }}"
     - "{{ opensearch }}"
     - "{{ ops_dashboard }}"
@@ -32,6 +32,14 @@
   vars:
     ops_packages:
       - dashboard
+  roles:
+    - OpenSearchStack
+
+- hosts: onode1, onode2, onode3, dnode
+  become: yes
+  vars:
+    ops_packages:
+      - filebeat
   roles:
     - OpenSearchStack
 
