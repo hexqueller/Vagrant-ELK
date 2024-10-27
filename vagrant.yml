@@ -6,10 +6,11 @@
     # - "{{ elastic }}"
     # - "{{ logstash }}"
     # - "{{ kibana }}"
-    - "{{ filebeat }}"
+    # - "{{ filebeat }}"
     # - "{{ metricbeat }}"
     - "{{ opensearch }}"
     - "{{ ops_dashboard }}"
+    - "{{ fluentbit }}"
   roles:
     - Repository
 
@@ -39,7 +40,7 @@
   become: yes
   vars:
     ops_packages:
-      - filebeat
+      - fluentbit
   roles:
     - OpenSearchStack
 

@@ -15,6 +15,7 @@ metricbeat: "https://{{ yandex }}/m/metricbeat/metricbeat-{{ elk_ver }}-amd64.de
 ops_ver: 2.17.1
 opensearch: "https://artifacts.opensearch.org/releases/bundle/opensearch/{{ ops_ver }}/opensearch-{{ ops_ver }}-linux-x64.deb"
 ops_dashboard: "https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/{{ ops_ver }}/opensearch-dashboards-{{ ops_ver }}-linux-x64.deb"
+fluentbit: "https://packages.fluentbit.io/debian/bookworm/fluent-bit_3.1.9_amd64.deb"
 
 #### Repository
 dpkg_packages:

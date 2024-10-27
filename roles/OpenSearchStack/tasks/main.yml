@@ -41,22 +41,22 @@
         state: restarted
   when: '"dashboard" in ops_packages'
 
-- name: FileBeat
+- name: Fluentbit
   block:
     - name: Install missing package
       apt:
-        name: filebeat
+        name: fluent-bit
         state: present
 
     - name: Template config
       template:
-        src: templates/filebeat.yml.j2
-        dest: /etc/filebeat/filebeat.yml
+        src: templates/fluent-bit.conf.j2
+        dest: /etc/fluent-bit/fluent-bit.conf
         mode: '0644'
 
-    - name: Start FileBeat
+    - name: Start Fluentbit
       systemd:
-        name: filebeat
+        name: fluent-bit
         enabled: yes
         state: restarted
-  when: '"filebeat" in ops_packages'
+  when: '"fluentbit" in ops_packages'
