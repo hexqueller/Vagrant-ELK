@@ -84,8 +84,11 @@
 [INPUT]
     name cpu
     tag  cpu.local
+    interval_sec 1
 
-    # Read interval (sec) Default: 1
+[INPUT]
+    name mem
+    tag  memory.local
     interval_sec 1
 
 [OUTPUT]
@@ -93,9 +96,10 @@
     Match *
     Host onode1
     Port 9200
-    Index fluent
+    Index metrics
     Type my_type
     HTTP_User admin
     HTTP_Passwd {{ opensearch_admin_password }}
     tls on
     tls.verify off
+    Suppress_Type_Name On
